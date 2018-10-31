@@ -46,6 +46,10 @@ def draw():
         #draws player
         fill("#FFEFD5") #peach
         ellipse(playerX, playerY, 50, 50)
+        fill(0)
+        ellipse(playerX - 7, playerY - 7, 5, 5)
+        ellipse(playerX + 7, playerY - 7, 5, 5)
+        rect(playerX-7, playerY + 10, 14, 1)
         
         #borders
         if(playerX <= 10):
@@ -104,6 +108,10 @@ def draw():
         #draw player
         fill("#FFEFD5") #peach
         ellipse(playerX, playerY, 50, 50)
+        fill(0)
+        ellipse(playerX - 7, playerY - 7, 5, 5)
+        ellipse(playerX + 7, playerY - 7, 5, 5)
+        rect(playerX-7, playerY + 10, 14, 1)
     
         #borders
         if(playerX <= 10):
@@ -130,7 +138,7 @@ def draw():
         textFont(winFont)
         text("HAPPY HALLOWEEN!", 50, 100)
         image(pumpkin, width/2 - 180, pumpkinY, 360, 248)
-        pumpkinY -= 1
+        pumpkinY -= 2
         if(pumpkinY <= 190):
             pumpkinY = 190
         
