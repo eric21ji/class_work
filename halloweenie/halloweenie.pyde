@@ -3,11 +3,10 @@ playerY = 120
 room = 0
 rooms_visited = 0
 pumpkinY = 480
-
-red_ball_y = 400
+red_ball_y = 440
 
 def setup():
-    global door_img, ghost_img, doot, care_bear, pumpkin, spookFont, defaultFont, winFont
+    global door_img, ghost_img, doot, care_bear, pumpkin, spookFont, defaultFont, endFont
     size(640, 480)
     noStroke()
     door_img = loadImage("door.png")
@@ -17,10 +16,10 @@ def setup():
     pumpkin = loadImage("pumpkin.jpg")
     spookFont = createFont("Lucida Sans Demibold", 24)
     defaultFont = createFont("SansSerif.plain", 12)
-    winFont = createFont("Lucida Sans Demibold", 48)
+    endFont = createFont("Lucida Sans Demibold", 48)
     
 def draw():
-    global playerX, playerY, room, pumpkinY
+    global playerX, playerY, room, pumpkinY, red_ball_y
     
     if room == 0: #Starting screen
         background(0)
@@ -137,7 +136,7 @@ def draw():
     elif room == 7: #happy halloween screen
         background(0)
         fill("#FF8C00")
-        textFont(winFont)
+        textFont(endFont)
         text("HAPPY HALLOWEEN!", 50, 100)
         image(pumpkin, width/2 - 180, pumpkinY, 360, 248)
         pumpkinY -= 2
@@ -157,8 +156,6 @@ def draw():
         
         #draw doors
         image(door_img, 100, 100, 45, 75)
-        text("The evil red ball is coming to get you!", 80, 400)
-        text("If the evil red ball reaches the door first, you lose!", 80, 
         #draw player
         fill("#FFEFD5") #peach
         ellipse(playerX, playerY, 50, 50)
@@ -168,8 +165,12 @@ def draw():
         rect(playerX-7, playerY + 10, 14, 1)
         #draw evil red ball
         fill(148, 15, 15)
-        ellipse(100, red_ball_y, 75, 75)
-        red_ball_y -= 1
+        ellipse(122.5, red_ball_y, 75, 75)
+        fill(255)
+        text("The evil red ball is coming to get you!", 80, 400)
+        text("If the evil red ball reaches the door first, you lose!", 80, 415)
+
+        red_ball_y -= 1.45
     
         #borders
         if(playerX <= 10):
@@ -181,12 +182,23 @@ def draw():
         if(playerX >= 630):
             playerX = 630  
             
-        
+        if red_ball_y <= 175 : #player lose
+            room = 13
+            
+    elif room == 13:
+        background(0)
+        textFont(endFont)
+        text("YOU LOSE", 80, 120)
+        textFont(defaultFont)
+        text("Click anywhere to start again", 80, 400)
+        red_ball_y = 440
         
 def mousePressed():
     global room
     if room == 0:
         room = 1 #exit starting screen
+    if room == 13:
+        room = 0 #restart game
     
 def keyPressed():
     global room, playerX, playerY, rooms_visited
@@ -215,9 +227,9 @@ def keyPressed():
         room = 5
     elif room == 5 and playerX in range(120, 165) and playerY in range(180, 255): #move to almost end screen
         room = 8
+        playerX = 480
+        playerY = 320
     elif room == 6 and key == ' ': #move to halloween screen
-        room = o
+        room = 7
     elif room == 8 and playerX in range(100, 145) and playerY in range(100, 175): #move to room 6
         room = 6
-    elif room == 8 and red_ball_y in range(100, 145): #player lose
-        room = 11
