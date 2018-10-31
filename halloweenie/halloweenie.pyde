@@ -4,6 +4,8 @@ room = 0
 rooms_visited = 0
 pumpkinY = 480
 
+red_ball_y = 400
+
 def setup():
     global door_img, ghost_img, doot, care_bear, pumpkin, spookFont, defaultFont, winFont
     size(640, 480)
@@ -141,6 +143,44 @@ def draw():
         pumpkinY -= 2
         if(pumpkinY <= 190):
             pumpkinY = 190
+    elif room == 8: #evil red ball chasing you
+        if(keyPressed): #controls player movement
+            if key == 'w':
+                playerY -= 3
+            if key == 's':
+                playerY += 3
+            if key == 'a':
+                playerX -= 3
+            if key == 'd':
+                playerX += 3
+        background(0)
+        
+        #draw doors
+        image(door_img, 100, 100, 45, 75)
+        text("The evil red ball is coming to get you!", 80, 400)
+        text("If the evil red ball reaches the door first, you lose!", 80, 
+        #draw player
+        fill("#FFEFD5") #peach
+        ellipse(playerX, playerY, 50, 50)
+        fill(0)
+        ellipse(playerX - 7, playerY - 7, 5, 5)
+        ellipse(playerX + 7, playerY - 7, 5, 5)
+        rect(playerX-7, playerY + 10, 14, 1)
+        #draw evil red ball
+        fill(148, 15, 15)
+        ellipse(100, red_ball_y, 75, 75)
+        red_ball_y -= 1
+    
+        #borders
+        if(playerX <= 10):
+            playerX = 10
+        if(playerY <= 10):
+            playerY = 10
+        if(playerY >= 470):
+            playerY = 470
+        if(playerX >= 630):
+            playerX = 630  
+            
         
         
 def mousePressed():
@@ -173,7 +213,11 @@ def keyPressed():
         rooms_visited += 1
     elif room == 1 and rooms_visited >= 3: #sends to main room with extra door
         room = 5
-    elif room == 5 and playerX in range(120, 165) and playerY in range(180, 225): #move to almost end screen
-        room = 6
+    elif room == 5 and playerX in range(120, 165) and playerY in range(180, 255): #move to almost end screen
+        room = 8
     elif room == 6 and key == ' ': #move to halloween screen
-        room = 7
+        room = o
+    elif room == 8 and playerX in range(100, 145) and playerY in range(100, 175): #move to room 6
+        room = 6
+    elif room == 8 and red_ball_y in range(100, 145): #player lose
+        room = 11
