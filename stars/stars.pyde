@@ -45,7 +45,7 @@ def draw():
         stars[star][0] += 1
     
     #pop stars
-    for star in range(len(stars)-1, 0, -1:  #move in reverse, otherwise index out of bounds when a coordinate is popped from the list
+    for star in range(len(stars)-1, 0, -1):  #move in reverse, otherwise index out of bounds when a coordinate is popped from the list
         if stars[star-1][0] >= width + 5:
             stars.pop(star-1)
             
